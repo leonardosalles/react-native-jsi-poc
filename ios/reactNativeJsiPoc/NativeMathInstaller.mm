@@ -1,10 +1,8 @@
-#import <React/RCTBridge+Private.h>
-#import "NativeMath.h"
-
-using namespace facebook;
+#import <Foundation/Foundation.h>
+#import <jsi/jsi.h>
 
 namespace rnjsi {
-  void installNativeMath(jsi::Runtime &runtime);
+  void installNativeMath(facebook::jsi::Runtime &runtime);
 }
 
 @interface NativeMathInstaller : NSObject
@@ -12,15 +10,9 @@ namespace rnjsi {
 
 @implementation NativeMathInstaller
 
-+ (void)install:(RCTBridge *)bridge {
-  if (!bridge || !bridge.runtime) {
-    NSLog(@"JS runtime not available yet");
-    return;
-  }
-
-  auto &runtime = *(facebook::jsi::Runtime *)bridge.runtime;
++ (void)installWithRuntime:(facebook::jsi::Runtime &)runtime {
   rnjsi::installNativeMath(runtime);
-  NSLog(@"NativeMath installed via JSI on iOS");
+  NSLog(@"✅ NativeMath installed via JSI on iOS");
 }
 
 @end
